@@ -1,89 +1,68 @@
 import type { Metadata } from "next";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
-import PageHero from "@/src/components/Shared/PageHero/PageHero";
+import Link from "next/link";
+import SectionHero from "@/src/components/Shared/SectionHero/SectionHero";
+import ContactInfoCards from "@/src/components/Ui/ContactPage/ContactInfoCards";
 import ContactForm from "@/src/components/Ui/ContactPage/ContactForm";
+import ContactMap from "@/src/components/Ui/ContactPage/ContactMap";
+import Offices from "@/src/components/Ui/ContactPage/Offices";
+import FAQ from "@/src/components/Ui/ContactPage/FAQ";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Get in touch with Eco Yachts to plan your sustainable charter — fleet questions, custom itineraries, or a quote for your next trip.",
+    "Get in touch with Minvip to talk through your site, timeline and scope — we reply within one business day.",
 };
-
-// TODO: same placeholders as Navbar/Footer — replace with the charter
-// company's real contact details.
-const CONTACT_PHONE = "+1 (202) 555-0198";
-const CONTACT_EMAIL = "hello@ecoyachts.com";
-const OFFICE_ADDRESS = "14 Marina Boulevard, Athens, Greece";
-const OPEN_HOURS = "Mon – Sat, 9am – 6pm";
-
-const INFO_ITEMS = [
-  { icon: Phone, label: "Phone", value: CONTACT_PHONE, href: `tel:${CONTACT_PHONE.replace(/[^+\d]/g, "")}` },
-  { icon: Mail, label: "Email", value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
-  { icon: MapPin, label: "Office", value: OFFICE_ADDRESS },
-  { icon: Clock, label: "Hours", value: OPEN_HOURS },
-];
 
 export default function ContactPage() {
   return (
-    <>
-      <PageHero
-        eyebrow="Contact"
-        title="Let's Plan Your Charter"
-        subtitle="Questions about the fleet, a destination, or a group booking? Reach out and we&apos;ll get back to you within one business day."
-        image="/images/yachts/yacht-render-1.jpg"
-        alt="Luxury charter yacht at anchor near a tropical coastline"
+    <div className="bg-ink-950">
+      <SectionHero
+        crumbs={[{ label: "Home", href: "/" }, { label: "Contact" }]}
+        title={
+          <>
+            Let&apos;s Talk About Your <span className="text-lime-400">Site</span>
+          </>
+        }
       />
 
-      <section className="bg-white py-16 md:py-24">
-        <div className="container grid lg:grid-cols-[1fr_1.2fr] gap-12">
-          <div className="space-y-8">
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">
-                Get in Touch
-              </span>
-              <h2 className="mt-3 text-3xl font-bold text-brand-900">
-                We&apos;re Here to Help
+      <ContactInfoCards />
+
+      <section className="py-16 sm:py-20 lg:py-24">
+        <div className="container">
+          <div className="overflow-hidden rounded-[24px] border border-white/10 bg-ink-800 lg:grid lg:grid-cols-2">
+            <div className="p-6 sm:p-10 lg:p-12">
+              <span className="text-xs font-medium text-white/50">Get In Touch</span>
+              <h2 className="font-display mt-3 mb-7 text-2xl font-semibold text-white sm:text-[28px]">
+                Send Us A <span className="text-lime-400">Message</span>
               </h2>
+              <ContactForm />
             </div>
-
-            <ul className="space-y-5">
-              {INFO_ITEMS.map(({ icon: Icon, label, value, href }) => (
-                <li key={label} className="flex items-start gap-4">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                    <Icon size={18} />
-                  </span>
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-wide text-brand-900/50">
-                      {label}
-                    </p>
-                    {href ? (
-                      <a
-                        href={href}
-                        className="font-medium text-brand-900 hover:text-brand-600 transition"
-                      >
-                        {value}
-                      </a>
-                    ) : (
-                      <p className="font-medium text-brand-900">{value}</p>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <div className="overflow-hidden rounded-2xl border border-brand-900/10">
-              <iframe
-                title="Eco Yachts office location"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=23.60%2C37.94%2C23.64%2C37.96&layer=mapnik&marker=37.9475%2C23.6187"
-                className="h-64 w-full"
-                loading="lazy"
-              />
-            </div>
+            <ContactMap />
           </div>
-
-          <ContactForm />
         </div>
       </section>
-    </>
+
+      <Offices />
+      <FAQ />
+
+      <section className="pb-20 sm:pb-24 lg:pb-28">
+        <div className="container">
+          <div className="flex flex-col items-center gap-5 rounded-[24px] border border-white/10 bg-linear-to-br from-ink-700 to-ink-800 px-6 py-14 text-center sm:px-10">
+            <h2 className="font-display text-2xl font-semibold text-white sm:text-[30px]">
+              Ready To Start Your <span className="text-lime-400">Project</span>?
+            </h2>
+            <p className="max-w-md text-sm text-white/50">
+              Get a free, no-obligation site estimate within 48 hours.
+            </p>
+            <Link
+              href="tel:+0324687890"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-lime-400 px-6 py-3.5 text-sm font-semibold text-lime-950 transition hover:bg-lime-300 sm:w-auto"
+            >
+              GET A FREE QUOTE
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
