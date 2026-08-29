@@ -19,6 +19,21 @@
   --color-gold-600: #b98530;
 
   --font-script: var(--font-caveat), cursive;
+
+  /* ============ MINVIP (mining services) theme ============ */
+  --color-ink-950: #0b0e0b;
+  --color-ink-900: #10140f;
+  --color-ink-800: #141912;
+  --color-ink-700: #1a2117;
+  --color-ink-600: #232b1b;
+  --color-ink-500: #3c4a33;
+
+  --color-lime-950: #12160e;
+  --color-lime-400: #c9ea3f;
+  --color-lime-300: #dff56a;
+
+  --font-display: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-work-sans), sans-serif;
 }
 
 /* ================= ROOT THEME ================= */

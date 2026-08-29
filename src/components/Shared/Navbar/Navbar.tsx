@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Clock, Phone } from "lucide-react";
+import { Clock, Menu, Phone, Search } from "lucide-react";
 import Logo from "../Logo/Logo";
 import MessageWidget from "../MessageWidget/MessageWidget";
 import MobileBottomNav from "../MobileBottomNav/MobileBottomNav";
@@ -14,19 +14,14 @@ import { useGetMyMessagesQuery } from "@/src/redux/api/chatApi";
 import { CONTACT_PHONE, MENU_ITEMS, OPEN_HOURS } from "./menuItems";
 
 const Navbar: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [prevPathname, setPrevPathname] = useState<string | null>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const pathname = usePathname();
   const user = useAppSelector((state) => state.auth.user);
 
-  const { data: myMessagesRes, isLoading: isMessagesLoading } = useGetMyMessagesQuery(
-    undefined,
-    { skip: !user },
-  );
+  const { data: myMessagesRes, isLoading: isMessagesLoading } =
+    useGetMyMessagesQuery(undefined, { skip: !user });
   const chat = useChatSocket({
     enabled: Boolean(user),
     role: "customer",
@@ -34,21 +29,12 @@ const Navbar: React.FC = () => {
     initialMessages: myMessagesRes?.data,
   });
 
-  /* close any open desktop dropdown / mobile drawer / chat panel whenever
-   * the route changes */
+  /* close the mobile drawer / chat panel whenever the route changes */
   if (pathname !== prevPathname) {
     setPrevPathname(pathname);
-    setOpenDropdown(null);
     setIsOpen(false);
     setIsChatOpen(false);
   }
-
-  /* scroll shadow */
-  useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   /* stop body scroll when menu open */
   useEffect(() => {
@@ -57,150 +43,90 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 w-full z-50">
+      <header className="fixed top-0 z-50 w-full">
         {/* TOP UTILITY BAR */}
-        <div className="hidden lg:block bg-brand-900 text-white/80">
-          <div className="container flex items-center justify-between h-9 text-xs">
+        <div className="hidden bg-ink-950 text-white/60 lg:block">
+          <div className="container flex h-9 items-center justify-between text-xs">
             <div className="flex items-center gap-6">
               <a
                 href={`tel:${CONTACT_PHONE.replace(/[^+\d]/g, "")}`}
-                className="flex items-center gap-2 hover:text-white transition"
+                className="flex items-center gap-2 transition hover:text-white"
               >
-                <Phone size={13} className="text-brand-300" />
+                <Phone size={13} className="text-lime-400" />
                 {CONTACT_PHONE}
               </a>
               <span className="flex items-center gap-2">
-                <Clock size={13} className="text-brand-300" />
+                <Clock size={13} className="text-lime-400" />
                 {OPEN_HOURS}
               </span>
             </div>
             <Link
               href="/contact"
-              className="bg-gold-500 text-brand-900 px-3.5 py-1 rounded-full text-xs font-semibold hover:bg-gold-400 transition"
+              className="rounded-full bg-lime-400 px-3.5 py-1 text-xs font-semibold text-lime-950 transition hover:bg-lime-300"
             >
-              Book Now
+              Get A Free Quote
             </Link>
           </div>
         </div>
 
         {/* MAIN NAVBAR */}
-        <div
-          className={`md:bg-transparent transition lg:border-b lg:border-brand-900/10 lg:bg-white ${
-            isScrolled ? "lg:shadow-sm" : ""
-          }`}
-        >
-          <div className="container flex items-center justify-between h-16">
-            <Link
-              href="/"
-              onClick={() => setIsOpen(false)}
-              className="hidden lg:block"
-            >
-              <Logo variant="dark" />
+        <div className="border-b md:block hidden border-white/5 bg-ink-950/95 backdrop-blur-sm">
+          <div className="container flex h-16 items-center justify-between lg:h-[70px]">
+            <Link href="/" onClick={() => setIsOpen(false)}>
+              <Logo size="md" />
             </Link>
 
             {/* DESKTOP MENU */}
-            <nav className="hidden lg:flex gap-7">
+            <nav className="hidden items-center gap-9 lg:flex">
               {MENU_ITEMS.map((item) => {
                 const isActive =
                   item.href === "/"
                     ? pathname === "/"
                     : pathname.startsWith(item.href);
 
-                if (!item.children) {
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`text-sm font-medium transition ${
-                        isActive
-                          ? "text-brand-600"
-                          : "text-brand-900 hover:text-brand-600"
-                      }`}
-                    >
-                      {item.display}
-                    </Link>
-                  );
-                }
-
-                const isDropdownOpen = openDropdown === item.href;
-
                 return (
-                  <div
+                  <Link
                     key={item.href}
-                    className="relative"
-                    onMouseEnter={() => setOpenDropdown(item.href)}
-                    onMouseLeave={() => setOpenDropdown(null)}
-                    onBlur={(e) => {
-                      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                        setOpenDropdown(null);
-                      }
-                    }}
+                    href={item.href}
+                    className={`font-body text-sm font-medium transition ${
+                      isActive ? "text-white" : "text-white/55 hover:text-white"
+                    }`}
                   >
-                    <Link
-                      href={item.href}
-                      onClick={() => setOpenDropdown(null)}
-                      onFocus={() => setOpenDropdown(item.href)}
-                      className={`flex items-center gap-1 text-sm font-medium transition ${
-                        isActive
-                          ? "text-brand-600"
-                          : "text-brand-900 hover:text-brand-600"
-                      }`}
-                    >
-                      {item.display}
-                      <ChevronDown
-                        size={14}
-                        className={`transition-transform ${
-                          isDropdownOpen ? "rotate-180" : ""
-                        }`}
-                      />
-                    </Link>
-
-                    <div
-                      className={`absolute left-1/2 top-full z-50 w-64 -translate-x-1/2 pt-3 transition duration-200 ${
-                        isDropdownOpen
-                          ? "visible opacity-100"
-                          : "invisible opacity-0"
-                      }`}
-                    >
-                      <div className="overflow-hidden rounded-xl border border-brand-900/10 bg-white py-2 shadow-xl">
-                        {item.children.map((child) => (
-                          <Link
-                            key={child.href}
-                            href={child.href}
-                            onClick={() => setOpenDropdown(null)}
-                            onFocus={() => setOpenDropdown(item.href)}
-                            className="block px-4 py-2.5 text-sm text-brand-900/80 transition hover:bg-brand-50 hover:text-brand-700"
-                          >
-                            {child.display}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                    {item.display}
+                  </Link>
                 );
               })}
             </nav>
 
-            <div className="hidden lg:flex items-center gap-4">
+            <div className="hidden items-center gap-3 lg:flex">
               {user && (
                 <Link
                   href="/my-bookings"
-                  className={`text-sm font-medium transition ${
+                  className={`font-body text-sm font-medium transition ${
                     pathname.startsWith("/my-bookings")
-                      ? "text-brand-600"
-                      : "text-brand-900 hover:text-brand-600"
+                      ? "text-white"
+                      : "text-white/55 hover:text-white"
                   }`}
                 >
-                  My Booking
+                  My Account
                 </Link>
               )}
-              <Link
-                href="/yachts"
-                className="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-700 transition"
+              <button
+                type="button"
+                aria-label="Search"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-ink-800 text-white/70 transition hover:text-white"
               >
-                Explore Yachts
-              </Link>
+                <Search size={15} />
+              </button>
             </div>
+            <button
+              type="button"
+              onClick={() => setIsOpen(true)}
+              aria-label="Open menu"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-ink-800 text-white/70 transition hover:text-white lg:hidden"
+            >
+              <Menu size={17} />
+            </button>
           </div>
         </div>
       </header>
@@ -208,15 +134,12 @@ const Navbar: React.FC = () => {
       <MobileMenuSheet
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        openSubmenu={openSubmenu}
-        onToggleSubmenu={(href) =>
-          setOpenSubmenu((prev) => (prev === href ? null : href))
-        }
+        openSubmenu={null}
+        onToggleSubmenu={() => {}}
       />
 
-      {/* spacer — reserved only at lg+, where the navbar is solid white;
-          on mobile the header is transparent and floats over the hero */}
-      <div className="hidden lg:block lg:h-[100px]" />
+      {/* spacer for the fixed header above */}
+      <div className="h-16 md:block hidden lg:h-[calc(70px+36px)]" />
 
       <MessageWidget
         isOpen={isChatOpen}

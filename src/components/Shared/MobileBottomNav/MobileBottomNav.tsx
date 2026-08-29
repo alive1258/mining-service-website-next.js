@@ -42,9 +42,9 @@ const NAV_LINKS: NavEntry[] = [
   },
   {
     type: "link",
-    key: "yachts",
-    label: "Yachts",
-    href: "/yachts",
+    key: "about",
+    label: "About",
+    href: "/about",
     icon: (active) => (
       <svg
         viewBox="0 0 24 24"
@@ -55,16 +55,16 @@ const NAV_LINKS: NavEntry[] = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M4 16h16l-2 3H6l-2-3Z" />
-        <path d="M12 4v10M12 4l4 6h-8" />
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
+        <path d="M9 12l2 2 4-4" />
       </svg>
     ),
   },
   {
     type: "link",
-    key: "destinations",
-    label: "Destinations",
-    href: "/destinations",
+    key: "projects",
+    label: "Projects",
+    href: "/projects",
     icon: (active) => (
       <svg
         viewBox="0 0 24 24"
@@ -75,8 +75,9 @@ const NAV_LINKS: NavEntry[] = [
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path d="M12 21s7-6.6 7-11.5A7 7 0 0 0 5 9.5C5 14.4 12 21 12 21Z" />
-        <circle cx="12" cy="9.5" r="2.2" />
+        <path d="M12 2 2 7l10 5 10-5-10-5Z" />
+        <path d="M2 17l10 5 10-5" />
+        <path d="M2 12l10 5 10-5" />
       </svg>
     ),
   },
@@ -132,13 +133,13 @@ const MobileBottomNav = ({
           onClick={onToggleChat}
           aria-label={isChatOpen ? "Close chat" : "Open chat"}
           aria-expanded={isChatOpen}
-          className="absolute  left-1/2 -top-6 z-50 flex h-14 w-14 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full bg-gold-500 text-brand-900 shadow-xl transition hover:scale-105 hover:bg-gold-400 ring- ring-white  hover:brightness-110"
+          className="absolute  left-1/2 -top-6 z-50 flex h-14 w-14 -translate-x-1/2 cursor-pointer items-center justify-center rounded-full bg-lime-400 text-lime-950 shadow-xl transition hover:scale-105 hover:bg-lime-300 hover:brightness-110"
         >
           {isChatOpen ? (
-            <X className="text-white" size={22} fill="none" />
+            <X className="text-lime-950" size={22} fill="none" />
           ) : (
             <>
-              <MessageCircle size={22} className="text-white" fill="none" />
+              <MessageCircle size={22} className="text-lime-950" fill="none" />
               {unreadChatCount > 0 && (
                 <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[11px] font-bold text-white ring-2 ring-neutral-900">
                   {unreadChatCount > 9 ? "9+" : unreadChatCount}
@@ -149,7 +150,7 @@ const MobileBottomNav = ({
         </button>
 
         <div
-          className="relative flex items-center justify-around rounded-t-3xl border-t-2 border-lime-400/60 bg-neutral-900/95 px-2 pb-2.5 pt-4 shadow-[0_-4px_20px_rgba(0,0,0,0.35)] backdrop-blur"
+          className="relative flex items-center justify-around rounded-t-3xl border-t-2 border-lime-400/60 bg-ink-900/95 px-2 pb-2.5 pt-4 shadow-[0_-4px_20px_rgba(0,0,0,0.35)] backdrop-blur"
           style={{
             WebkitMaskImage:
               "radial-gradient(circle at 50% 3%, transparent 33px, black 35px)",

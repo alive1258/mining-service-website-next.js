@@ -1,56 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Mail, PhoneCall, ArrowUp, ShieldCheck, Leaf } from "lucide-react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaYoutube,
-  FaLinkedinIn,
-} from "react-icons/fa";
+import { MapPin, Mail, PhoneCall, ArrowRight, ArrowUp } from "lucide-react";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 import Logo from "../Logo/Logo";
+import { CONTACT_PHONE, OPEN_HOURS } from "../Navbar/menuItems";
 
 /* ================= CONSTANTS ================= */
-// TODO: replace with the charter company's real contact details — same
-// placeholders used in Navbar / NewsletterSection.
-const CONTACT_PHONE = "+1 (202) 555-0198";
-const CONTACT_EMAIL = "hello@ecoyachts.com";
-const OFFICE_ADDRESS = "14 Marina Boulevard, Athens, Greece";
+// TODO: replace with the client's real contact details.
+const CONTACT_EMAIL = "info@minvip.com";
+const OFFICE_ADDRESS = "North Star Avenue, Perth, Australia";
 
-const QUICK_LINKS = [
+const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Yachts", href: "/yachts" },
-  { label: "Destinations", href: "/destinations" },
+  { label: "About Us", href: "/about" },
+  { label: "Projects", href: "/projects" },
   { label: "Contact", href: "/contact" },
 ];
 
-const COMPANY_LINKS = [
-  { label: "About Us", href: "/about" },
-  { label: "Sustainability", href: "/about/sustainability" },
-  { label: "Join the Team", href: "/about/careers" },
-  { label: "News & Events", href: "/about/news/latest" },
-  { label: "Crew Services", href: "/crew-services" },
+const SERVICE_LINKS = [
+  { label: "Crushing & Screening", href: "/projects" },
+  { label: "Tailings Management", href: "/projects" },
+  { label: "Conveyor Systems", href: "/projects" },
+  { label: "Site Engineering", href: "/projects" },
 ];
 
-const SUPPORT_LINKS = [
-  { label: "Experiences", href: "/#experiences" },
-  { label: "Sailing Insights", href: "/blog" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/terms-conditions" },
-  { label: "Refund Policy", href: "/refund-policy" },
-];
-
-// TODO: swap in the charter company's real social profile URLs
+// TODO: swap in the client's real social profile URLs
 const SOCIAL_LINKS = [
   { icon: FaFacebookF, label: "Facebook", href: "#" },
   { icon: FaInstagram, label: "Instagram", href: "#" },
-  { icon: FaYoutube, label: "YouTube", href: "#" },
   { icon: FaLinkedinIn, label: "LinkedIn", href: "#" },
-];
-
-const CERTIFICATIONS = [
-  { icon: Leaf, label: "Eco Certified Fleet" },
-  { icon: ShieldCheck, label: "Verified & Insured" },
 ];
 
 /* ================= COMPONENT ================= */
@@ -62,19 +41,48 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-brand-900 text-white pt-20 pb-10 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
+    <footer className="border-t border-white/5 bg-ink-950 pb-10 pt-16 text-white lg:pt-20">
+      <div className="container">
+        {/* NEWSLETTER CTA */}
+        <div className="mb-14 flex flex-col items-center justify-between gap-6 rounded-3xl bg-lime-400 p-8 sm:flex-row sm:p-10 lg:mb-16">
+          <div className="text-center sm:text-left">
+            <h3 className="font-display text-2xl font-semibold text-lime-950">
+              Get the latest information
+            </h3>
+            <p className="mt-1.5 text-sm text-lime-950/70">
+              Project updates and industry insights, straight to your inbox.
+            </p>
+          </div>
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex w-full max-w-sm items-center gap-2 rounded-full bg-lime-950 py-1.5 pl-5 pr-1.5 sm:w-auto"
+          >
+            <input
+              type="email"
+              required
+              placeholder="Email address"
+              className="w-full min-w-0 bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none"
+            />
+            <button
+              type="submit"
+              aria-label="Subscribe"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-lime-400 text-lime-950 transition hover:bg-lime-300"
+            >
+              <ArrowRight size={16} />
+            </button>
+          </form>
+        </div>
+
+        <div className="mb-10 grid grid-cols-1 gap-12 border-b border-white/10 pb-10 lg:grid-cols-12">
           {/* BRAND */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="space-y-5 lg:col-span-4">
             <div>
-              <Link href="/#home" className="inline-flex">
-                <Logo variant="light" size="lg" />
+              <Link href="/" className="inline-flex">
+                <Logo size="lg" />
               </Link>
-              <p className="mt-4 text-brand-100/70 text-sm max-w-sm leading-relaxed">
-                Eco-certified yacht charters for travelers who care about
-                where they go and how they get there. Luxury that gives back
-                to the seas it sails.
+              <p className="mt-4 max-w-sm text-sm leading-relaxed text-white/50">
+                Global mining and industrial engineering services, built on
+                safety, compliance and results.
               </p>
             </div>
 
@@ -85,38 +93,26 @@ const Footer = () => {
                   href={href}
                   onClick={href === "#" ? (e) => e.preventDefault() : undefined}
                   aria-label={label}
-                  className="flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-brand-100/70 hover:bg-brand-600 hover:text-white transition-colors"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/60 transition hover:bg-lime-400 hover:text-lime-950"
                 >
                   <Icon size={14} />
                 </a>
               ))}
             </div>
-
-            <div className="flex flex-col gap-2">
-              {CERTIFICATIONS.map(({ icon: Icon, label }) => (
-                <span
-                  key={label}
-                  className="inline-flex items-center gap-2 text-xs text-brand-100/70"
-                >
-                  <Icon size={14} className="text-gold-400" />
-                  {label}
-                </span>
-              ))}
-            </div>
           </div>
 
           {/* LINK COLUMNS */}
-          <div className="lg:col-span-8 grid grid-cols-2 gap-8 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-8 lg:col-span-8 lg:grid-cols-4">
             <div className="space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
-                Quick Links
+              <h3 className="font-display text-sm font-semibold text-white">
+                Navigation
               </h3>
               <ul className="space-y-3">
-                {QUICK_LINKS.map((link) => (
+                {NAV_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
+                      className="text-sm text-white/55 transition-colors duration-300 hover:text-lime-400"
                     >
                       {link.label}
                     </Link>
@@ -126,15 +122,15 @@ const Footer = () => {
             </div>
 
             <div className="space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
-                Company
+              <h3 className="font-display text-sm font-semibold text-white">
+                Services
               </h3>
               <ul className="space-y-3">
-                {COMPANY_LINKS.map((link) => (
+                {SERVICE_LINKS.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
+                      className="text-sm text-white/55 transition-colors duration-300 hover:text-lime-400"
                     >
                       {link.label}
                     </Link>
@@ -143,33 +139,15 @@ const Footer = () => {
               </ul>
             </div>
 
-            <div className="space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
-                Support
-              </h3>
-              <ul className="space-y-3">
-                {SUPPORT_LINKS.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className="text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-5">
-              <h3 className="text-sm font-bold uppercase tracking-widest text-white">
-                Contact Us
+            <div className="col-span-2 space-y-5 lg:col-span-2">
+              <h3 className="font-display text-sm font-semibold text-white">
+                Contact
               </h3>
               <ul className="space-y-3">
                 <li>
                   <a
                     href={`tel:${CONTACT_PHONE.replace(/[^+\d]/g, "")}`}
-                    className="flex items-start gap-2.5 text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
+                    className="flex items-start gap-2.5 text-sm text-white/55 transition-colors duration-300 hover:text-lime-400"
                   >
                     <PhoneCall size={15} className="mt-0.5 shrink-0" />
                     {CONTACT_PHONE}
@@ -178,46 +156,53 @@ const Footer = () => {
                 <li>
                   <a
                     href={`mailto:${CONTACT_EMAIL}`}
-                    className="flex items-start gap-2.5 text-brand-100/70 hover:text-gold-400 text-sm transition-colors duration-300"
+                    className="flex items-start gap-2.5 text-sm text-white/55 transition-colors duration-300 hover:text-lime-400"
                   >
                     <Mail size={15} className="mt-0.5 shrink-0" />
                     {CONTACT_EMAIL}
                   </a>
                 </li>
-                <li className="flex items-start gap-2.5 text-brand-100/70 text-sm">
+                <li className="flex items-start gap-2.5 text-sm text-white/55">
                   <MapPin size={15} className="mt-0.5 shrink-0" />
                   {OFFICE_ADDRESS}
                 </li>
+                <li className="text-sm text-white/40">{OPEN_HOURS}</li>
               </ul>
             </div>
           </div>
         </div>
 
         {/* BOTTOM BAR */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-xs text-brand-100/60 text-center md:text-left">
-            © {currentYear} <span className="text-gold-400">Eco Yachts</span>.
-            All rights reserved.
+        <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
+          <p className="text-center text-xs text-white/40 md:text-left">
+            Copyright © {currentYear}{" "}
+            <span className="text-lime-400">Minvip</span>. All Rights Reserved.
           </p>
 
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
-            {QUICK_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-xs text-brand-100/60 hover:text-gold-400 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            <Link
+              href="/terms-conditions"
+              className="text-xs text-white/40 transition-colors hover:text-lime-400"
+            >
+              User Terms &amp; Conditions
+            </Link>
+            <Link
+              href="/privacy-policy"
+              className="text-xs text-white/40 transition-colors hover:text-lime-400"
+            >
+              Privacy Policy
+            </Link>
           </div>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-brand-100/60 hover:text-gold-400 transition-all group"
+            className="group flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-white/40 transition-all hover:text-lime-400"
           >
             Back to top
-            <ArrowUp size={12} className="group-hover:-translate-y-1 transition-transform" />
+            <ArrowUp
+              size={12}
+              className="transition-transform group-hover:-translate-y-1"
+            />
           </button>
         </div>
       </div>

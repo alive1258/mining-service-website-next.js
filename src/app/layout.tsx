@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Caveat } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Caveat,
+  Space_Grotesk,
+  Work_Sans,
+} from "next/font/google";
 import "./globals.css";
 import Providers from "@/src/lib/providers/Providers";
 import ToastProvider from "../components/Common/ToastProvider/ToastProvider";
@@ -26,48 +32,64 @@ const caveat = Caveat({
   display: "swap",
 });
 
+// Minvip (mining services) marketing-page type — headline + body
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  display: "swap",
+});
+
+const workSans = Work_Sans({
+  variable: "--font-work-sans",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
 // ✅ SEO Metadata
 // NOTE: metadataBase/canonical use a placeholder domain — swap in the
 // real domain once one is registered/deployed.
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ecoyachts.com"),
+  metadataBase: new URL("https://minvip.com"),
 
   title: {
-    default: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
-    template: "%s | Eco Yachts",
+    default: "Minvip | Innovating Smart Industrial Growth Worldwide",
+    template: "%s | Minvip",
   },
 
   description:
-    "Charter eco-certified luxury yachts and sail the world responsibly. Curated journeys, sustainable travel, and unforgettable experiences on the water.",
+    "Minvip delivers global mining and industrial engineering services — crushing & screening, tailings management, conveyor systems and site engineering — built on safety, compliance and results.",
 
   keywords: [
-    "Eco Yachts",
-    "sustainable yacht charter",
-    "luxury yacht rental",
-    "eco-friendly yacht travel",
-    "yacht booking",
-    "responsible luxury travel",
+    "Minvip",
+    "mining services",
+    "industrial engineering",
+    "crushing and screening",
+    "tailings management",
+    "conveyor systems",
+    "mine site engineering",
   ],
 
-  authors: [{ name: "Eco Yachts" }],
-  creator: "Eco Yachts",
-  publisher: "Eco Yachts",
+  authors: [{ name: "Minvip" }],
+  creator: "Minvip",
+  publisher: "Minvip",
 
-  category: "travel",
+  category: "industrial services",
 
   // ✅ Open Graph (Facebook, LinkedIn)
   openGraph: {
-    title: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
+    title: "Minvip | Innovating Smart Industrial Growth Worldwide",
     description:
-      "Charter eco-certified luxury yachts and sail the world responsibly.",
-    url: "https://ecoyachts.com",
-    siteName: "Eco Yachts",
+      "Global mining and industrial engineering services, built on safety, compliance and results.",
+    url: "https://minvip.com",
+    siteName: "Minvip",
     images: [
       {
         url: "/images/hero-bg.jpg",
         width: 1600,
         height: 1000,
-        alt: "Eco Yachts — sustainable luxury yacht at sea",
+        alt: "Minvip — mining and industrial engineering services",
       },
     ],
     locale: "en_US",
@@ -77,9 +99,9 @@ export const metadata: Metadata = {
   // ✅ Twitter SEO
   twitter: {
     card: "summary_large_image",
-    title: "Eco Yachts | Sustainable Yachts. Extraordinary Journeys.",
+    title: "Minvip | Innovating Smart Industrial Growth Worldwide",
     description:
-      "Charter eco-certified luxury yachts and sail the world responsibly.",
+      "Global mining and industrial engineering services, built on safety, compliance and results.",
     images: ["/images/hero-bg.jpg"],
   },
 
@@ -99,7 +121,7 @@ export const metadata: Metadata = {
 
   // ✅ Canonical
   alternates: {
-    canonical: "https://ecoyachts.com",
+    canonical: "https://minvip.com",
   },
 
   // ✅ Icons
@@ -113,7 +135,7 @@ export const metadata: Metadata = {
   },
 
   // ✅ App Info
-  applicationName: "Eco Yachts",
+  applicationName: "Minvip",
   referrer: "origin-when-cross-origin",
 
   // ✅ Format detection
@@ -132,7 +154,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} font-sans antialiased bg-white text-brand-900`}
+        className={`${geistSans.variable} ${geistMono.variable} ${caveat.variable} ${spaceGrotesk.variable} ${workSans.variable} bg-ink-950 font-sans text-white antialiased`}
       >
         <Providers>
           {children}
